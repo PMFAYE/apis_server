@@ -1,3 +1,4 @@
+var cors = require('cors');
 const express = require('express'),
   app = express(),
   bodyParser = require('body-parser');
@@ -10,8 +11,14 @@ const mc = mysql.createConnection({
     host: 'localhost',
     user: 'cpdlc_web',
     password: 'dsnadoteyss3',
-    database: 'mydb'
+    database: 'revueinterneproject'
 });
+
+var corsOptions = {
+  origin: '*',
+  methods: ['GET', 'PUT', 'POST'],
+  optionsSuccessStatus: 200
+};
  
 // connect to database
 mc.connect();
@@ -23,5 +30,9 @@ console.log('API server started on: ' + port);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(cors(corsOptions));
+
 var routes = require('./app/routes/approutes'); //importing route
 routes(app); //register the route
+
+
